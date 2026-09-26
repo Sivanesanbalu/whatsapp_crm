@@ -9,6 +9,7 @@ export type TemplateSlug =
   | 'welcome_message'
   | 'out_of_office'
   | 'lead_qualifier'
+  | 'promotion_inquiry'
   | 'follow_up_reminder'
 
 export interface TemplateStepSeed {
@@ -98,6 +99,26 @@ export const AUTOMATION_TEMPLATES: Record<TemplateSlug, AutomationTemplateDefini
       {
         step_type: 'wait',
         step_config: { amount: 10, unit: 'minutes' },
+      },
+      {
+        step_type: 'assign_conversation',
+        step_config: { mode: 'round_robin' },
+      },
+    ],
+  },
+  promotion_inquiry: {
+    slug: 'promotion_inquiry',
+    name: 'Promotion Inquiry Routing',
+    description: 'Tag and route contacts who ask about offers or discounts.',
+    trigger_type: 'keyword_match',
+    trigger_config: {
+      keywords: ['promotion', 'discount', 'offer', 'sale', 'coupon'],
+      match_type: 'contains',
+    },
+    steps: [
+      {
+        step_type: 'add_tag',
+        step_config: { tag_id: '' },
       },
       {
         step_type: 'assign_conversation',
